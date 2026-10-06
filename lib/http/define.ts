@@ -20,6 +20,8 @@ export type DefinedMutation<TData extends ApiData = object, TBody = void> = {
 export function defineTextQuery(config: {
   path: string
 }): DefinedQuery<{ html: string }> {
+  const path = `/html${config.path}`
+
   return {
     path: config.path,
     queryKey() {
@@ -27,7 +29,7 @@ export function defineTextQuery(config: {
     },
     async fetch(_params, init) {
       const html = await requestText({
-        path: config.path,
+        path,
         signal: init?.signal,
       })
 
